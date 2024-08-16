@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Year Countdown</title>
+   <style>
+    body {
+    font-family: 'Arial', sans-serif;
+    background-color: #282c34;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.countdown-container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.time-box {
+    background-color: #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    min-width: 100px;
+    text-align: center;
+}
+.time-box:hover{
+    transform: scale(1.1);
+    background-color: lightgray;
+}
+
+.time-box span {
+    font-size: 2em;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.time-box p {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+   </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <h1>New Year Countdown</h1>
+        <div class="countdown">
+            <div class="time-box">
+                <span id="days"></span>
+                <p>Days</p>
+            </div>
+            <div class="time-box">
+                <span id="hours"></span>
+                <p>Hours</p>
+            </div>
+            <div class="time-box">
+                <span id="minutes"></span>
+                <p>Minutes</p>
+            </div>
+            <div class="time-box">
+                <span id="seconds"></span>
+                <p>Seconds</p>
+            </div>
+        </div>
+    </div>
+    <script>
+    
+        function countdown() {
+        const currentYear = new Date().getFullYear();
+        const nextYear = currentYear + 1;
+        const newYearTime = new Date(`January 1, ${nextYear} 00:00:00`).getTime();
+        const now = new Date().getTime();
+        const timeRemaining = newYearTime - now;
+    
+        const secondsInDay = 24 * 60 * 60;
+        const secondsInHour = 60 * 60;
+        const secondsInMinute = 60;
+    
+        const days = Math.floor(timeRemaining / (secondsInDay * 1000));
+        const hours = Math.floor((timeRemaining % (secondsInDay * 1000)) / (secondsInHour * 1000));
+        const minutes = Math.floor((timeRemaining % (secondsInHour * 1000)) / (secondsInMinute * 1000));
+        const seconds = Math.floor((timeRemaining % (secondsInMinute * 1000)) / 1000);
+    
+        document.getElementById('days').textContent = days;
+        document.getElementById('hours').textContent = hours;
+        document.getElementById('minutes').textContent = minutes;
+        document.getElementById('seconds').textContent = seconds;
+    
+        if (timeRemaining < 0) {
+            clearInterval(countdownInterval);
+            document.querySelector('.countdown').innerHTML = "<h2>Happy New Year!</h2>";
+        }
+    }
+    
+    const countdownInterval = setInterval(countdown, 1000);
+    countdown(); // Initial call to avoid 1-second delay
+    </script>
+</body>
+</html>
